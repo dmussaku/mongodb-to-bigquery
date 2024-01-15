@@ -1,0 +1,161 @@
+{
+  "type": "record",
+  "name": "YourRecordName",
+  "doc": "Your record description here.",
+  "fields": [
+    {
+      "name": "_id",
+      "type": "string",
+      "doc": "Unique identifier."
+    },
+    {
+      "name": "createdAt",
+      "type": "string",
+      "doc": "Creation timestamp."
+    },
+    {
+      "name": "mode",
+      "type": "string",
+      "doc": "Mode description."
+    },
+    {
+      "name": "sheetName",
+      "type": "string",
+      "doc": "Name of the sheet."
+    },
+    {
+      "name": "sheetId",
+      "type": "string",
+      "doc": "Identifier of the sheet."
+    },
+    {
+      "name": "validFrom",
+      "type": "string",
+      "doc": "Validity start timestamp."
+    },
+    {
+      "name": "validUntil",
+      "type": "string",
+      "doc": "Validity end timestamp."
+    },
+    {
+      "name": "carrier_id",
+      "type": "string",
+      "doc": "Carrier identifier."
+    },
+    {
+      "name": "classification",
+      "type": "string",
+      "doc": "Classification description."
+    },
+    {
+      "name": "contractNumbers",
+      "type": "string",
+      "doc": "Contract numbers."
+    },
+    {
+      "name": "pol_ids",
+      "type": {
+        "type": "array",
+        "items": "string"
+      },
+      "doc": "List of POL IDs."
+    },
+    {
+      "name": "pod_ids",
+      "type": {
+        "type": "array",
+        "items": "string"
+      },
+      "doc": "List of POD IDs."
+    },
+    {
+      "name": "namedAccounts",
+      "type": "string",
+      "doc": "Named accounts."
+    },
+    {
+      "name": "pricePerContainerType",
+      "type": {
+        "type": "array",
+        "items": {
+          "type": "record",
+          "name": "PricePerContainerType",
+          "doc": "Container pricing information.",
+          "fields": [
+            {
+              "name": "applicableContainerType",
+              "type": "string",
+              "doc": "Applicable container type."
+            },
+            {
+              "name": "price",
+              "type": {
+                "type": "record",
+                "name": "Price",
+                "doc": "Container price information.",
+                "fields": [
+                  {
+                    "name": "value",
+                    "type": "int",
+                    "doc": "Price value."
+                  },
+                  {
+                    "name": "code",
+                    "type": "string",
+                    "doc": "Currency code."
+                  }
+                ]
+              }
+            },
+            {
+              "name": "originalPrice",
+              "type": {
+                "type": "record",
+                "name": "OriginalPrice",
+                "doc": "Original container price information.",
+                "fields": [
+                  {
+                    "name": "value",
+                    "type": "int",
+                    "doc": "Original price value."
+                  },
+                  {
+                    "name": "code",
+                    "type": "string",
+                    "doc": "Currency code."
+                  }
+                ]
+              }
+            },
+            {
+              "name": "subsidisation",
+              "type": {
+                "type": "record",
+                "name": "Subsidisation",
+                "doc": "Subsidisation information.",
+                "fields": [
+                  {
+                    "name": "value",
+                    "type": "int",
+                    "doc": "Subsidisation value."
+                  },
+                  {
+                    "name": "code",
+                    "type": "string",
+                    "doc": "Currency code."
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "code",
+      "type": "string",
+      "doc": "Code information."
+    }
+  ]
+}

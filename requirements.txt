@@ -1,0 +1,4 @@
+pymongo
+loguru
+ipython
+fastavro
