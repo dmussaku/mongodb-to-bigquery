@@ -28,7 +28,7 @@ def fetch_all_records(
     limit: int = 0,
     offset: int = 0,
 ):
-    """Fetch records in batches and validate them against the Avro schema."""
+    """Continuously polls data by calling fetch_records and validates it against the Avro schema."""
     schema = parse_schema(schema)
 
     while True:
