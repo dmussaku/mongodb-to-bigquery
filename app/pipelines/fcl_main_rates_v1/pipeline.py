@@ -1,11 +1,7 @@
-import json
-import os
 from typing import Optional, Dict
 
-from fastavro import writer, reader, parse_schema
+from fastavro import parse_schema
 from fastavro.validation import validate_many
-from bson.json_util import dumps as bson_dumps
-from pymongo import MongoClient
 from pymongo.collection import Collection
 
 from .config import (
@@ -32,15 +28,20 @@ def fetch_all_records(
     limit: int = 0,
     offset: int = 0,
 ):
-    """Continuosly polls data by calling fetch_records and validates it agains the avro schema"""
-    collection = setup_database(DB_CONNECTION_STRING, DB_NAME, DB_COLLECTION)
+    """Fetch records in batches and validate them against the Avro schema."""
     schema = parse_schema(schema)
+
     while True:
         records = list(fetch_records(collection, query, limit, offset))
+        if not records:
+            break
+
         records = [patch_mongo_complex_fields(record) for record in records]
         logger.info(records)
         validate_many(records, schema)
-        break
+
+        if limit:
+            offset += limit
 
 
 def run_pipeline():
@@ -48,4 +49,10 @@ def run_pipeline():
     avro_schema = get_avro_schema(SCHEMA_PATH)
     collection = setup_database(DB_CONNECTION_STRING, DB_NAME, DB_COLLECTION)
     logger.info(collection)
-    fetch_all_records(avro_schema, collection, query=QUERY, limit=QUERY_LIMIT, offset=0)
+    fetch_all_records(
+        avro_schema,
+        collection,
+        query=QUERY,
+        limit=QUERY_LIMIT,
+        offset=0,
+    )
