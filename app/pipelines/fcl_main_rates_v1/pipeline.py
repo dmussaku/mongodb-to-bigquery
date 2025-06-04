@@ -34,6 +34,7 @@ def fetch_all_records(
     ``offset`` and validates them against the Avro schema until no
     additional records are returned.
     """
+    """Continuously polls data by calling fetch_records and validates it against the Avro schema."""
     schema = parse_schema(schema)
 
     while True:
