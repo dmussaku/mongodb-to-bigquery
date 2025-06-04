@@ -33,3 +33,23 @@ def test_patch_mongo_complex_fields_converts_and_preserves_types():
     assert result["flag"] is True
     assert result["data"] == {"x": 1}
     assert result["list"] == [1, 2, 3]
+
+
+class CustomDatetime(datetime.datetime):
+    pass
+
+def test_patch_basic_types():
+    record = {
+        '_id': ObjectId('64f8c2c2c2c2c2c2c2c2c2c2'),
+        'created': datetime.datetime(2024, 1, 1, 0, 0),
+        'name': 'example',
+    }
+    patched = patch_mongo_complex_fields(record.copy())
+    assert isinstance(patched['_id'], str)
+    assert isinstance(patched['created'], str)
+    assert patched['name'] == 'example'
+
+def test_patch_subclassed_datetime():
+    record = {'date': CustomDatetime(2024, 1, 1, 0, 0)}
+    patched = patch_mongo_complex_fields(record.copy())
+    assert isinstance(patched['date'], str)

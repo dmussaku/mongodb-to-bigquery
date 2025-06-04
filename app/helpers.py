@@ -36,6 +36,6 @@ def patch_mongo_complex_fields(
 ):
     """Patches mongo complex fields to be json serializable, casts str on those fields"""
     for key, value in record.items():
-        if type(value) in types:
+        if isinstance(value, types):
             record[key] = str(value)
     return record
