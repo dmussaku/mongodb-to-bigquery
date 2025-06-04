@@ -28,6 +28,12 @@ def fetch_all_records(
     limit: int = 0,
     offset: int = 0,
 ):
+    """Fetch all matching records in batches and validate them.
+
+    The function keeps pulling batches of size ``limit`` starting from
+    ``offset`` and validates them against the Avro schema until no
+    additional records are returned.
+    """
     """Continuously polls data by calling fetch_records and validates it against the Avro schema."""
     schema = parse_schema(schema)
 
